@@ -45,10 +45,18 @@ function displayNews(data) {
 
 $("#myModal").modal("hide");
 
-$.getJSON("/all", function(data) {
-  // Call our function to generate a table body
-  $("#news-list").empty();
-  displayNews(data);
+// $.getJSON("/all", function(data) {
+//   // Call our function to generate a table body
+//   $("#news-list").empty();
+//   displayNews(data);
+// });
+
+$("#homeBtn").on("click", function () {
+    $.getJSON("/all", function(data) {
+        // Call our function to generate a table body
+        $("#news-list").empty();
+        displayNews(data);
+    });
 });
 
 $("#scrapeBtn").on("click", function () {
@@ -59,26 +67,15 @@ $("#scrapeBtn").on("click", function () {
     }).done(function(data) {
         console.log(data);
         setTimeout(function () {
-            window.location = "/";
+            window.location = "/all";
         }, 1500);
     })
 });
 
-// <div class="row" style="padding:20px; border:1px solid black">
-//     <div class="col-lg-12">
-//     </div>
-//     <div class="row">
-//     <div class="col-lg-8">
-//     <h2>HEADLINES</h2>
-//     </div>
-//     <div class="col-lg-4" style="margin-top: 25px">
-//     <button class="btn btn-success" style="font-size: 18px">Save Article</button>
-// </div>
-// </div>
-// <div class="row">
-//     <div class="col-lg-12">
-//     <p>Description about the news</p>
-// </div>
-// </div>
-// </div>
-// </div>
+$("#savedArtBtn").on("click", function () {
+    $.getJSON("/saved", function(data) {
+        // Call our function to generate a table body
+        $("#news-list").empty();
+        displayNews(data);
+    });
+});

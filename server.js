@@ -2,6 +2,7 @@ var cheerio = require("cheerio");
 var request = require("request");
 var mongojs = require("mongojs");
 var express = require("express");
+var exphbs = require("express-handlebars");
 
 var databaseUrl = "new_york_times";
 var collections = ["news"];
@@ -10,6 +11,9 @@ var app = express();
 
 app.use(express.static("public"));
 
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 var db = mongojs(databaseUrl, collections);
 
 db.on("error", function(error) {
@@ -17,19 +21,32 @@ db.on("error", function(error) {
 });
 
 app.get("/", function(req, res) {
-    res.send("Hello world");
+    db.news.find({}, function(error, found) {
+        var allArticlesObj = {
+            articles: found
+        };
+        console.log(allArticlesObj);
+        res.render("home", allArticlesObj);
+    });
 });
 
 app.get("/all", function(req, res) {
     db.news.find({}, function(error, found) {
-        // Log any errors if the server encounters one
-        if (error) {
-            console.log(error);
-        }
-        // Otherwise, send the result of this query to the browser
-        else {
-            res.json(found);
-        }
+        var allArticlesObj = {
+            articles: found
+        };
+        console.log(allArticlesObj);
+        res.render("home", allArticlesObj);
+    });
+});
+
+app.get("/saved", function(req, res) {
+    db.news.find({saved:true}, function(error, found) {
+        var allArticlesObj = {
+            articles: found
+        };
+        console.log(allArticlesObj);
+        res.render("saved_articles", allArticlesObj);
     });
 });
 
