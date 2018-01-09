@@ -21,13 +21,7 @@ db.on("error", function(error) {
 });
 
 app.get("/", function(req, res) {
-    db.news.find({}, function(error, found) {
-        var allArticlesObj = {
-            articles: found
-        };
-        console.log(allArticlesObj);
-        res.render("home", allArticlesObj);
-    });
+    res.redirect(req.baseUrl + "/all");
 });
 
 app.get("/all", function(req, res) {
@@ -37,6 +31,25 @@ app.get("/all", function(req, res) {
         };
         console.log(allArticlesObj);
         res.render("home", allArticlesObj);
+    });
+});
+
+app.get("/addNotes/:id", function(req, res) {
+    db.comments.find({newsId:req.params.id}, function(error, found) {
+        var notesObj = {
+            id: req.params.id,
+            notes: found
+        };
+        console.log(notesObj);
+        res.send(notesObj);
+    });
+});
+
+app.post("/insertNotes", function(req, res) {
+    var id = req.query.id;
+    var notes = req.query.notes;
+    db.comments.insert({newsId:id, notes: notes}, function(error, found) {
+        res.send("Insert Success!" + notes);
     });
 });
 

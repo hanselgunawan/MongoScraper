@@ -44,6 +44,8 @@ function displayNews(data) {
 }
 
 $("#myModal").modal("hide");
+$(".articlesNoteModal").modal("hide");
+var newsId;
 
 // $.getJSON("/all", function(data) {
 //   // Call our function to generate a table body
@@ -78,4 +80,51 @@ $("#savedArtBtn").on("click", function () {
         $("#news-list").empty();
         displayNews(data);
     });
+});
+
+$(".addNotesBtn").on("click", function () {
+    $(".modal-body").empty();
+    $(".notesTextarea").val("");
+    newsId = $(this).attr("data-id");
+    $.ajax({
+        method: "GET",
+        url: "/addNotes/" + newsId,
+    }).done(function(data) {
+        console.log(data);
+        $(".newsId").text(data.id);
+        if(data.notes.length>0)
+        {
+            for(let i=0;i<data.notes.length;i++)
+            {
+                $(".modal-body").append("<div class='row' style='border:2px solid grey; border-radius: 5px; margin: 0px 5px 5px 5px; padding: 15px'>" +
+                "<div class='col-lg-12'>" +
+                "<div class='col-lg-10'>" +
+                "<p style='margin-top: 7px'>"+data.notes[i].notes+"</p>" +
+                "</div>" +
+                "<div class='col-lg-2'>" +
+                "<button class='btn btn-danger'>X</button>" +
+                "</div>" +
+                "</div>" +
+                "</div>");
+            }
+        }
+        else
+        {
+            $(".modal-body").append("<div class='row' style='border:2px solid grey; border-radius: 5px; margin-left: 5px; margin-right: 5px; padding: 15px'>" +
+            "<div class='col-lg-12' style='text-align: center'>" +
+            "<p style='margin-top: 7px'>No notes to be shown</p>" +
+            "</div></div>")
+        }
+        $(".articlesNoteModal").modal("show");
+    })
+});
+
+$(".saveNotesBtn").on("click", function () {
+    var notesText = $(".notesTextarea").val();
+    $.ajax({
+        method: "POST",
+        url: "/insertNotes?id=" + newsId + "&notes=" + notesText,
+    }).done(function(data) {
+        console.log(data);
+    })
 });
