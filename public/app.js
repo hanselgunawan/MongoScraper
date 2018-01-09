@@ -102,7 +102,7 @@ $(".addNotesBtn").on("click", function () {
                 "<p style='margin-top: 7px'>"+data.notes[i].notes+"</p>" +
                 "</div>" +
                 "<div class='col-lg-2'>" +
-                "<button class='btn btn-danger'>X</button>" +
+                "<button class='btn btn-danger removeNotesBtn' data-id='"+data.notes[i]._id+"'>X</button>" +
                 "</div>" +
                 "</div>" +
                 "</div>");
@@ -126,5 +126,16 @@ $(".saveNotesBtn").on("click", function () {
         url: "/insertNotes?id=" + newsId + "&notes=" + notesText,
     }).done(function(data) {
         console.log(data);
+    })
+});
+
+$(document).on("click", ".removeNotesBtn", function () {
+    var notesID = $(this).attr("data-id");
+    $.ajax({
+        method: "POST",
+        url: "/removeNotes/" + notesID
+    }).done(function(data) {
+        console.log(data);
+        $(".articlesNoteModal").modal("hide");
     })
 });

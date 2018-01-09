@@ -53,6 +53,13 @@ app.post("/insertNotes", function(req, res) {
     });
 });
 
+app.post("/removeNotes/:id", function(req, res) {
+    var ObjectId = mongojs.ObjectID;
+    db.comments.remove({_id:ObjectId(req.params.id)}, function(error, found) {
+        res.send("Remove Success!");
+    });
+});
+
 app.get("/saved", function(req, res) {
     db.news.find({saved:true}, function(error, found) {
         var allArticlesObj = {
