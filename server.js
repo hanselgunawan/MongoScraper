@@ -20,7 +20,7 @@ db.on("error", function(error) {
     console.log("Database Error:", error);
 });
 
-app.get("*", function(req, res) {
+app.get("/", function(req, res) {
     res.redirect("/all");
 });
 

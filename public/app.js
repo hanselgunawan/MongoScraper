@@ -122,12 +122,15 @@ $(".addNotesBtn").on("click", function () {
 
 $(".saveNotesBtn").on("click", function () {
     var notesText = $(".notesTextarea").val();
-    $.ajax({
-        method: "POST",
-        url: "/insertNotes?id=" + newsId + "&notes=" + notesText,
-    }).done(function(data) {
-        console.log(data);
-    })
+    if(notesText !== "")
+    {
+        $.ajax({
+            method: "POST",
+            url: "/insertNotes?id=" + newsId + "&notes=" + notesText,
+        }).done(function(data) {
+            console.log(data);
+        })
+    }
 });
 
 $(".saveArticleBtn").on("click", function () {
