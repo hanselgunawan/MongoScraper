@@ -4,7 +4,8 @@ var mongojs = require("mongojs");
 var express = require("express");
 var exphbs = require("express-handlebars");
 
-var databaseUrl = "mongodb://heroku_wmxql9m5:nfg5vl35guh7gnu3pmrvamn4oi@ds249737.mlab.com:49737/heroku_wmxql9m5";
+// var databaseUrl = "mongodb://heroku_wmxql9m5:nfg5vl35guh7gnu3pmrvamn4oi@ds249737.mlab.com:49737/heroku_wmxql9m5";
+var databaseUrl = "new_york_times";
 var collections = ["news"];
 
 var app = express();

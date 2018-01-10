@@ -1,23 +1,33 @@
 <div id="news-list">
-    {{#each articles}}
-        <div class='row' style='padding:20px; border:0.5px solid grey'>
-            <div class='col-lg-12'>
-                <div class='row'>
-                    <div class='col-lg-9'>
-                        <a href="{{link}}"><h2>{{title}}</h2></a>
+    {{#if articles}}
+        {{#each articles}}
+            <div class='row' style='padding:20px; border:0.5px solid grey'>
+                <div class='col-lg-12'>
+                    <div class='row'>
+                        <div class='col-lg-9'>
+                            <a href="{{link}}"><h2>{{title}}</h2></a>
+                        </div>
+                        <div class='col-lg-3' style='margin-top: 25px'>
+                            <button class='btn btn-success saveArticleBtn' style='font-size: 18px' data-id="{{_id}}">Save Article</button>
+                        </div>
                     </div>
-                    <div class='col-lg-3' style='margin-top: 25px'>
-                        <button class='btn btn-success saveArticleBtn' style='font-size: 18px' data-id="{{_id}}">Save Article</button>
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class='col-lg-12'>
-                        <p>{{desc}}</p>
+                    <div class='row'>
+                        <div class='col-lg-12'>
+                            <p>{{desc}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
+        {{/each}}
+    {{else}}
+        <div class='row'>
+            <div class='row'>
+                <div class='col-lg-12' style="text-align: center; font-size: 18pt; margin-top: 40px">
+                    <p>No scraped articles</p>
+                </div>
+            </div>
         </div>
-    {{/each}}
+    {{/if}}
 </div>
 
 <div class="modal fade classModal" id="myModal" role="dialog">
