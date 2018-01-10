@@ -8,6 +8,7 @@ var databaseUrl = "mongodb://heroku_wmxql9m5:nfg5vl35guh7gnu3pmrvamn4oi@ds249737
 var collections = ["news"];
 
 var app = express();
+var port = process.env.PORT || 3000;
 
 app.use(express.static("public"));
 
@@ -119,6 +120,6 @@ app.get("/scrape", function(req, res) {
 });
 
 // Set the app to listen on port 3000
-app.listen(3000, function() {
+app.listen(port, function() {
     console.log("App running on port 3000!");
 });
