@@ -44,6 +44,7 @@ function displayNews(data) {
 }
 
 $("#myModal").modal("hide");
+$("#haveScrapedModal").modal("hide");
 $(".articlesNoteModal").modal("hide");
 var newsId;
 
@@ -62,12 +63,12 @@ $("#homeBtn").on("click", function () {
 });
 
 $("#scrapeBtn").on("click", function () {
-    $("#myModal").modal("show");
     $.ajax({
         method: "GET",
         url: "/scrape",
     }).done(function(data) {
         console.log(data);
+        $("#myModal").modal("show");
         setTimeout(function () {
             window.location = "/all";
         }, 1500);
@@ -126,6 +127,28 @@ $(".saveNotesBtn").on("click", function () {
         url: "/insertNotes?id=" + newsId + "&notes=" + notesText,
     }).done(function(data) {
         console.log(data);
+    })
+});
+
+$(".saveArticleBtn").on("click", function () {
+    newsId = $(this).attr("data-id");
+    $.ajax({
+        method: "POST",
+        url: "/saveArticle/" + newsId,
+    }).done(function(data) {
+        console.log(data);
+        window.location = "/all";
+    })
+});
+
+$(".deleteArticleBtn").on("click", function () {
+    newsId = $(this).attr("data-id");
+    $.ajax({
+        method: "POST",
+        url: "/deleteArticle/" + newsId,
+    }).done(function(data) {
+        console.log(data);
+        window.location = "/saved";
     })
 });
 
